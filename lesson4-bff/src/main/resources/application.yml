@@ -1,2 +1,2 @@
 service:
-  dns: http://${backend_host:localhost}
+  dns: http://${backend_host}
