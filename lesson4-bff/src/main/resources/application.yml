@@ -1,0 +1,2 @@
+service:
+  dns: http://internal-mynavi-sample-private-alb-XXXXXXX.ap-northeast-1.elb.amazonaws.com
