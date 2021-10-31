@@ -1,2 +1,34 @@
+spring:
+  profiles:
+    active: dev
+
 service:
-  dns: http://${backend_host}
+  dns: http://${backend_host:localhost:8888}
+
+cloud:
+  aws:
+    stack:
+      auto: false
+bucket:
+  name: ma-furutanito-bucket-local
+s3:
+  upload:
+    role:
+      name: s3-direct-access
+      session:
+        name: mynavi-sample
+    duration:
+      seconds: 86400
+    limitBytes: 10000000000
+    acl: private
+  download:
+    role:
+      name: s3-direct-access
+      session:
+        name: mynavi-sample
+    duration:
+      seconds: 600
+sts:
+  min:
+    duration:
+      minutes: 15
