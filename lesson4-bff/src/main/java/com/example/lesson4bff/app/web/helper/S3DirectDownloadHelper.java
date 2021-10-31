@@ -53,10 +53,8 @@ public class S3DirectDownloadHelper implements InitializingBean {
         Date expiration = Date.from(ZonedDateTime.now().plusSeconds(durationSeconds).toInstant());
         String fileName = StringUtils.substringAfterLast(filePath, DIRECTORY_DELIMITER);
         ResponseHeaderOverrides responseHeaderOverrides = new ResponseHeaderOverrides();
-        responseHeaderOverrides.withContentDisposition(new StringBuilder()
-                .append("attachment;filename=")
-                .append("".equals(fileName) ? filePath : fileName)
-                .toString());
+        responseHeaderOverrides.withContentDisposition("attachment;filename=" +
+                ("".equals(fileName) ? filePath : fileName));
         GeneratePresignedUrlRequest generatePresignedUrlRequest
                 = new GeneratePresignedUrlRequest(bucketName, filePath, HttpMethod.GET);
         generatePresignedUrlRequest.withExpiration(expiration);
@@ -66,12 +64,10 @@ public class S3DirectDownloadHelper implements InitializingBean {
 
     private AmazonS3 getS3ClientWithDownloadPolicy(String objectKey){
         // Create ARN for download S3 Object.
-        String resourceArn = new StringBuilder()
-                .append(RESOURCE_ARN_PREFIX)
-                .append(bucketName)
-                .append(DIRECTORY_DELIMITER)
-                .append(objectKey)
-                .toString();
+        String resourceArn = RESOURCE_ARN_PREFIX +
+                bucketName +
+                DIRECTORY_DELIMITER +
+                objectKey;
         // Create IAM Policy provided temporary security credentials.
         Statement statement = new Statement(Statement.Effect.Allow)
                 .withActions(S3Actions.GetObject)

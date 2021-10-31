@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.WritableResource;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -38,12 +39,10 @@ public class S3UploadHelper {
     AmazonS3 amazonS3;
 
     public String saveFile(MultipartFile multipartFile){
-        String objectKey = new StringBuilder()
-                .append(S3_BUCKET_PREFIX)
-                .append(bucketName)
-                .append(DIRECTORY_DELIMITER)
-                .append(multipartFile.getOriginalFilename())
-                .toString();
+        String objectKey = S3_BUCKET_PREFIX +
+                bucketName +
+                DIRECTORY_DELIMITER +
+                multipartFile.getOriginalFilename();
         WritableResource writableResource = (WritableResource)resourceLoader.getResource(objectKey);
         try(InputStream inputStream = multipartFile.getInputStream();
             OutputStream outputStream = writableResource.getOutputStream()){
@@ -56,7 +55,7 @@ public class S3UploadHelper {
 
     public boolean existsDirectory(String directoryPath){
         try{
-            List resourceList = Arrays.asList(
+            List<Resource> resourceList = Arrays.asList(
                     resourcePatternResolver.getResources(directoryPath + "/**"));
             if (resourceList.size() == 0){
                 return false;

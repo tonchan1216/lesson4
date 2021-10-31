@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestOperations;
 
+import java.awt.image.BufferedImage;
+
 @Controller
 public class BackendForFrontendController {
 
@@ -33,7 +35,7 @@ public class BackendForFrontendController {
         return "index";
     }
 
-    @GetMapping("portal")
+    @GetMapping("/portal")
     public String portal(Model model){
         model.addAttribute("imageUrl",
                 s3DirectDownloadHelper.getPresignedUrl("sample2.jpg").toString());
@@ -52,14 +54,14 @@ public class BackendForFrontendController {
             headers = "Accept=image/jpeg, image/jpg, image/png, image/gif",
             produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE})
     @ResponseBody
-    public ResponseEntity getImage(){
+    public ResponseEntity<BufferedImage> getImage(){
         return ResponseEntity.ok().body(
                 s3DownloadHelper.getImage("sample.jpg"));
     }
 
     @GetMapping("getTextFileBody")
     @ResponseBody
-    public ResponseEntity getTextFileBody(){
+    public ResponseEntity<String> getTextFileBody(){
         return ResponseEntity.ok().body(
                 s3DownloadHelper.getTextFileBody("test.txt"));
     }

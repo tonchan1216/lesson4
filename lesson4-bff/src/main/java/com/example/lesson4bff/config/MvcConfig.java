@@ -14,7 +14,6 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -39,11 +38,6 @@ public class MvcConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/portal").setViewName("forward:/portal");
-    }
-
-    @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new BufferedImageHttpMessageConverter());
         converters.add(byteArrayHttpMessageConverter());
@@ -58,8 +52,8 @@ public class MvcConfig implements WebMvcConfigurer {
         return arrayHttpMessageConverter;
     }
 
-    private List getSupportedMediaTypes() {
-        List list = new ArrayList();
+    private List<MediaType> getSupportedMediaTypes() {
+        List<MediaType> list = new ArrayList<>();
         list.add(MediaType.IMAGE_JPEG);
         list.add(MediaType.IMAGE_PNG);
         list.add(MediaType.APPLICATION_OCTET_STREAM);

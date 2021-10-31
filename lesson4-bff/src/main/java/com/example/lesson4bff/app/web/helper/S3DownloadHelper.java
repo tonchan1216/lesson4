@@ -27,12 +27,10 @@ public class S3DownloadHelper{
 
     public BufferedImage getImage(String imageFilePath){
         Resource resource = resourceLoader.getResource(
-                new StringBuilder()
-                        .append(S3_BUCKET_PREFIX)
-                        .append(bucketName)
-                        .append(DIRECTORY_DELIMITER)
-                        .append(imageFilePath)
-                        .toString());
+                S3_BUCKET_PREFIX +
+                        bucketName +
+                        DIRECTORY_DELIMITER +
+                        imageFilePath);
         BufferedImage image = null;
         try(InputStream inputStream = resource.getInputStream()){
             image = ImageIO.read(inputStream);
@@ -44,12 +42,10 @@ public class S3DownloadHelper{
 
     public String getTextFileBody(String textFilePath){
         Resource resource = resourceLoader.getResource(
-                new StringBuilder()
-                        .append(S3_BUCKET_PREFIX)
-                        .append(bucketName)
-                        .append(DIRECTORY_DELIMITER)
-                        .append(textFilePath)
-                        .toString());
+                S3_BUCKET_PREFIX +
+                        bucketName +
+                        DIRECTORY_DELIMITER +
+                        textFilePath);
         String textBody = null;
         try(InputStream inputStream = resource.getInputStream()){
             textBody = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
