@@ -10,22 +10,22 @@ cloud:
     stack:
       auto: false
 bucket:
-  name: ma-furutanito-bucket-local
+  name: ma-furutanito-bucket
 s3:
   upload:
     role:
-      name: s3-direct-access
+      name: MA-furutanito-ecs-role
       session:
-        name: mynavi-sample
+        name: lesson4-bff
     duration:
       seconds: 86400
     limitBytes: 10000000000
     acl: private
   download:
     role:
-      name: s3-direct-access
+      name: MA-furutanito-ecs-role
       session:
-        name: mynavi-sample
+        name: lesson4-bff
     duration:
       seconds: 600
 sts:
