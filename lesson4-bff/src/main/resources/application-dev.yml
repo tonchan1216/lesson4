@@ -1,7 +1,10 @@
+server:
+  port: 8080
+
 cloud:
   aws:
     credentials:
-      profileName:
+      profileName: juku
       instanceProfile: false
     region:
       auto: false
