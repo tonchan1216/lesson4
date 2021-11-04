@@ -4,7 +4,7 @@ server:
 cloud:
   aws:
     credentials:
-      profileName: profile juku
+      profileName: juku
       instanceProfile: false
     region:
       auto: false
