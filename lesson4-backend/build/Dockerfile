@@ -1,22 +1,15 @@
-FROM centos:centos7 AS builder
+FROM adoptopenjdk/maven-openjdk11:latest AS builder
 LABEL  maintainer "cleartone1216"
 
-RUN yum install -y \
-    java-11-openjdk \
-    java-11-openjdk-devel \
-    wget tar iproute git
-
-RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo && \
-    sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo && \
-    yum install -y apache-maven && \
-    update-alternatives --set java java-11-openjdk.x86_64
-ENV JAVA_HOME /etc/alternatives/jre
+RUN apt update && apt install -y git
 RUN git clone https://github.com/tonchan1216/lesson4.git /usr/local/lesson4
 RUN mvn install -f /usr/local/lesson4/lesson4-backend/pom.xml
 
-FROM adoptopenjdk/openjdk11:latest
-RUN cp /etc/localtime /etc/localtime.org && \
-    ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+FROM adoptopenjdk/openjdk11:alpine-slim
+RUN apk --update add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/* && \
     mkdir -p /opt/app/
 COPY --from=builder /usr/local/lesson4/lesson4-backend/target/lesson4-backend-0.0.1-SNAPSHOT.jar /opt/app/
 
