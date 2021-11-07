@@ -12,6 +12,7 @@
         <module>lesson4-bff</module>
         <module>lesson4-batch</module>
         <module>lesson4-backend</module>
+        <module>lesson4-consumer</module>
     </modules>
 
     <properties>
