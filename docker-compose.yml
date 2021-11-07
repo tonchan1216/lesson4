@@ -4,7 +4,7 @@ services:
   bff:
     build:
       context: ./lesson4-bff
-      dockerfile: Dockerfile
+      dockerfile: build/Dockerfile
     ports:
       - "8080:8080"
     image: cleartone1216/lesson4-bff
@@ -13,5 +13,5 @@ services:
   backend:
     build:
       context: ./lesson4-backend
-      dockerfile: Dockerfile
+      dockerfile: build/Dockerfile
     image: cleartone1216/lesson4-backend
