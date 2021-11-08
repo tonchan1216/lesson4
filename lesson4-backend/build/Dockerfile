@@ -1,7 +1,7 @@
 FROM adoptopenjdk/maven-openjdk11:latest AS builder
 LABEL  maintainer "cleartone1216"
 
-RUN apt update && apt install -y git
+RUN apt-get update && apt-get install -y git
 RUN git clone https://github.com/tonchan1216/lesson4.git /usr/local/lesson4
 RUN mvn install -f /usr/local/lesson4/lesson4-backend/pom.xml
 
